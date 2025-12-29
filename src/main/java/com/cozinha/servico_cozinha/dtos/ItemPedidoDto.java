@@ -1,4 +1,4 @@
-package com.cozinha.dtos;
+package com.cozinha.servico_cozinha.dtos;
 
 
 public record ItemPedidoDto(

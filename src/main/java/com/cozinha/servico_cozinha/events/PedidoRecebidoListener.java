@@ -1,9 +1,9 @@
-package com.cozinha.events;
+package com.cozinha.servico_cozinha.events;
 
 import org.springframework.stereotype.Component;
 
-import com.cozinha.dtos.PedidoCozinhaRequestDto;
-import com.cozinha.services.CozinhaService;
+import com.cozinha.servico_cozinha.dtos.PedidoCozinhaRequestDto;
+import com.cozinha.servico_cozinha.services.CozinhaService;
 
 @Component
 public class PedidoRecebidoListener {

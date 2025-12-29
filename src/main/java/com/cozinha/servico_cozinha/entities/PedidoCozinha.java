@@ -1,4 +1,4 @@
-package com.cozinha.entities;
+package com.cozinha.servico_cozinha.entities;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,6 +8,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,7 +19,11 @@ import jakarta.persistence.Table;
 public class PedidoCozinha {
 
     @Id
-    private Long id; // mesmo ID vindo do serviço de pedidos
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "pedido_id", nullable = false)
+    private Long pedidoId; // id vindo do serviço de pedidos
 
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
@@ -72,5 +78,14 @@ public class PedidoCozinha {
 		this.itens = itens;
 	}
 
+	public Long getPedidoId() {
+		return pedidoId;
+	}
+
+	public void setPedidoId(Long pedidoId) {
+		this.pedidoId = pedidoId;
+	}
+
+	
 }
 

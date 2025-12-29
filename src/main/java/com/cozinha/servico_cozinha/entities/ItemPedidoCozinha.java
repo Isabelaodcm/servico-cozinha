@@ -1,4 +1,4 @@
-package com.cozinha.entities;
+package com.cozinha.servico_cozinha.entities;
 
 import jakarta.persistence.*;
 

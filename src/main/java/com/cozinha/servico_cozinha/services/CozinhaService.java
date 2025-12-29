@@ -1,17 +1,17 @@
-package com.cozinha.services;
+package com.cozinha.servico_cozinha.services;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.cozinha.dtos.ItemPedidoDto;
-import com.cozinha.dtos.PedidoCozinhaRequestDto;
-import com.cozinha.dtos.PedidoCozinhaResponseDto;
-import com.cozinha.entities.ItemPedidoCozinha;
-import com.cozinha.entities.PedidoCozinha;
-import com.cozinha.entities.StatusCozinha;
-import com.cozinha.repository.PedidoCozinhaRepository;
+import com.cozinha.servico_cozinha.dtos.ItemPedidoDto;
+import com.cozinha.servico_cozinha.dtos.PedidoCozinhaRequestDto;
+import com.cozinha.servico_cozinha.dtos.PedidoCozinhaResponseDto;
+import com.cozinha.servico_cozinha.entities.ItemPedidoCozinha;
+import com.cozinha.servico_cozinha.entities.PedidoCozinha;
+import com.cozinha.servico_cozinha.entities.StatusCozinha;
+import com.cozinha.servico_cozinha.repository.PedidoCozinhaRepository;
 
 @Service
 public class CozinhaService {
@@ -24,10 +24,12 @@ public class CozinhaService {
 
     public PedidoCozinhaResponseDto receberPedido(PedidoCozinhaRequestDto dto) {
         PedidoCozinha pedido = new PedidoCozinha();
-        pedido.setId(dto.id());
+//        pedido.setId(dto.id());
+        System.out.println("id do dto: " + dto.id());
+        pedido.setPedidoId(dto.id());
         pedido.setClienteId(dto.clienteId());
         pedido.setDataHora(LocalDateTime.now());
-        pedido.setStatus(StatusCozinha.AGUARDANDO);
+        pedido.setStatus(StatusCozinha.RECEBIDO);
 
         var itens = dto.itens().stream().map(i -> {
             ItemPedidoCozinha item = new ItemPedidoCozinha();
@@ -45,17 +47,24 @@ public class CozinhaService {
     public PedidoCozinhaResponseDto iniciarPreparo(Long id) {
         PedidoCozinha pedido = buscar(id);
         pedido.setStatus(StatusCozinha.EM_PREPARO);
-        return toDto(repository.save(pedido));
+        
+        PedidoCozinha pedidoSalvo = repository.save(pedido);
+        System.out.println("novo status: " + pedidoSalvo.getStatus());
+        return toDto(pedidoSalvo);
     }
 
     public PedidoCozinhaResponseDto finalizarPedido(Long id) {
         PedidoCozinha pedido = buscar(id);
         pedido.setStatus(StatusCozinha.PRONTO);
-        return toDto(repository.save(pedido));
+        
+        PedidoCozinha pedidoSalvo = repository.save(pedido);
+        System.out.println("novo status: " + pedidoSalvo.getStatus());
+        
+        return toDto(pedidoSalvo);
     }
 
     private PedidoCozinha buscar(Long id) {
-        return repository.findById(id)
+        return repository.findByPedidoId(id)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
 
