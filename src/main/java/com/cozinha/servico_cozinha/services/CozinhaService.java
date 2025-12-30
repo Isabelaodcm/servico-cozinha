@@ -22,7 +22,19 @@ public class CozinhaService {
         this.repository = repository;
     }
 
-    public PedidoCozinhaResponseDto receberPedido(PedidoCozinhaRequestDto dto) {
+    public void criarSeNaoExistir(Long pedidoId, Long clienteId) {
+        repository.findByPedidoId(pedidoId)
+            .orElseGet(() -> {
+            	PedidoCozinha pedido = new PedidoCozinha();
+                pedido.setClienteId(clienteId);
+                pedido.setPedidoId(pedidoId);
+                pedido.setDataHora(LocalDateTime.now());
+                pedido.setStatus(StatusCozinha.RECEBIDO);
+                return repository.save(pedido);
+            });
+    }
+
+      public PedidoCozinhaResponseDto receberPedido(PedidoCozinhaRequestDto dto) {
         PedidoCozinha pedido = new PedidoCozinha();
 //        pedido.setId(dto.id());
         System.out.println("id do dto: " + dto.id());
@@ -46,7 +58,7 @@ public class CozinhaService {
 
     public PedidoCozinhaResponseDto iniciarPreparo(Long id) {
         PedidoCozinha pedido = buscar(id);
-        pedido.setStatus(StatusCozinha.EM_PREPARO);
+//        pedido.setStatus(StatusCozinha.EM_PREPARO);
         
         PedidoCozinha pedidoSalvo = repository.save(pedido);
         System.out.println("novo status: " + pedidoSalvo.getStatus());

@@ -8,14 +8,14 @@ import com.cozinha.servico_cozinha.services.CozinhaService;
 @Component
 public class PedidoRecebidoListener {
 
-    private final CozinhaService service;
-
-    public PedidoRecebidoListener(CozinhaService service) {
-        this.service = service;
-    }
-
-    // Aqui futuramente entra RabbitMQ, Kafka etc.
-    public void onPedidoRecebido(PedidoCozinhaRequestDto dto) {
-        service.receberPedido(dto);
-    }
+//    private final CozinhaService service;
+//
+//    public PedidoRecebidoListener(CozinhaService service) {
+//        this.service = service;
+//    }
+//
+//    // Aqui futuramente entra RabbitMQ, Kafka etc.
+//    public void onPedidoRecebido(PedidoCozinhaRequestDto dto) {
+//        service.receberPedido(dto);
+//    }
 }
